@@ -1,0 +1,46 @@
+services:
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    ports:
+      - "5001:5001"
+    environment:
+      - NODE_ENV=development
+
+      - SESSION_SECRET=${SESSION_SECRET}
+      - BACKEND_PORT=${BACKEND_PORT}
+      - EXIFTOOL_PATH=/usr/bin/exiftool
+    volumes:
+      - ./backend/src:/app/src
+      - backend_data:/app/data
+      - uploads:/app/uploads
+    networks:
+      - inspector-network
+    restart: unless-stopped
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
+    environment:
+      - REACT_APP_API_BASE_URL=http://localhost:5001/api
+      - NODE_ENV=development
+    volumes:
+      - ./frontend/src:/app/src
+      - ./frontend/public:/app/public
+    depends_on:
+      - backend
+    networks:
+      - inspector-network
+    restart: unless-stopped
+
+volumes:
+  backend_data:
+  uploads:
+
+networks:
+  inspector-network:
+    driver: bridge
