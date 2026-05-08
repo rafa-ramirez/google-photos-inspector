@@ -1,10 +1,12 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Container, Box, Button, Card, CardContent, Typography, CircularProgress, Alert } from '@mui/material';
 import { useAnalysisStore } from '../store';
 import { analyzeFiles } from '../utils/analysis';
+import { translations } from '../translations';
 
 export default function LocalAnalyzer() {
   const { 
+    language,
     analysisResults, 
     analysisSummary,
     isAnalyzing, 
@@ -15,10 +17,10 @@ export default function LocalAnalyzer() {
     setAnalysisError 
   } = useAnalysisStore();
 
+  const t = translations[language];
 
   const handleFileSelect = (event) => {
     const files = event.target.files;
-
     if (files && files.length > 0) {
       handleAnalyze(files);
     }
@@ -26,7 +28,7 @@ export default function LocalAnalyzer() {
 
   const handleAnalyze = async (filesToAnalyze) => {
     if (!filesToAnalyze || filesToAnalyze.length === 0) {
-      setAnalysisError('Please select files to analyze');
+      setAnalysisError(t.selectFilesError);
       return;
     }
 
@@ -36,12 +38,9 @@ export default function LocalAnalyzer() {
     useAnalysisStore.getState().clearResults();
 
     try {
-      // Perform analysis entirely in the browser
       const data = await analyzeFiles(filesToAnalyze);
-      
       const sortedResults = (data.results || []).sort((a, b) => b.filename.localeCompare(a.filename));
       setAnalysisResults(sortedResults);
-      
       setAnalysisSummary({
         totalFiles: data.totalFiles,
         totalSelectedFiles: filesToAnalyze.length,
@@ -49,30 +48,34 @@ export default function LocalAnalyzer() {
       });
     } catch (error) {
       console.error('Analysis failed:', error);
-      setAnalysisError(error.message || 'Analysis failed');
+      setAnalysisError(error.message || t.analysisFailed);
     } finally {
       setIsAnalyzing(false);
     }
   };
 
+  const getIssueLabel = (issue) => {
+    return t.issues[issue] || issue;
+  };
+
   return (
     <Container maxWidth="lg" sx={{ py: 4 }}>
       <Typography variant="h4" gutterBottom>
-        📝 Local EXIF Metadata and Filename Analyzer
+        {t.analyzerTitle}
       </Typography>
 
       <Card sx={{ mb: 4 }}>
         <CardContent>
           <Typography variant="h6" gutterBottom>
-            Upload Google Takeout Folder
+            {t.uploadTitle}
           </Typography>
 
           <Typography variant="body2" color="textSecondary" paragraph>
-            Select your Google Takeout export folder. The tool will instantly analyze all media filenames for formatting issues and check their JSON metadata for missing location data.
+            {t.uploadDescription}
           </Typography>
 
           <Alert severity="info" sx={{ mb: 3 }}>
-            <strong>Privacy & Security:</strong> This tool is 100% serverless. When your browser asks to "Upload files", it simply means granting this app permission to read them locally. <strong>No data is ever sent to GitHub, any server, or the internet.</strong> All analysis happens entirely in your browser's memory.
+            <strong>{t.privacyNote}</strong> {t.privacyText}
           </Alert>
 
           <Box sx={{ display: 'flex', gap: 2, alignItems: 'center' }}>
@@ -93,14 +96,16 @@ export default function LocalAnalyzer() {
                 disabled={isAnalyzing}
               >
                 {isAnalyzing ? <CircularProgress size={24} sx={{ mr: 2 }} /> : null}
-                {isAnalyzing ? 'Analyzing...' : 'Choose Folder'}
+                {isAnalyzing ? t.analyzing : t.chooseFolder}
               </Button>
             </label>
           </Box>
 
           {analysisSummary && !isAnalyzing && analysisSummary.missingLocationCount > 0 && (
             <Typography variant="body2" sx={{ mt: 2 }}>
-              Processed {analysisSummary.totalFiles} media item(s) from {analysisSummary.totalSelectedFiles} selected files.
+              {t.processedFiles
+                .replace('{total}', analysisSummary.totalFiles)
+                .replace('{selected}', analysisSummary.totalSelectedFiles)}
             </Typography>
           )}
         </CardContent>
@@ -114,14 +119,14 @@ export default function LocalAnalyzer() {
 
       {analysisSummary && analysisSummary.missingLocationCount === 0 && (
         <Alert severity="success" sx={{ mb: 4 }}>
-          Successfully processed {analysisSummary.totalFiles} media item(s) from {analysisSummary.totalSelectedFiles} selected files. All items have valid filenames and EXIF location data!
+          {t.successMessage.replace('{total}', analysisSummary.totalFiles)}
         </Alert>
       )}
 
       {analysisResults.length > 0 && (
         <>
           <Typography variant="h6" gutterBottom>
-            Found {analysisResults.length} items with issues
+            {t.foundIssues.replace('{count}', analysisResults.length)}
           </Typography>
 
           {analysisResults.map((item) => (
@@ -129,17 +134,17 @@ export default function LocalAnalyzer() {
               <CardContent>
                 <Typography variant="h6">{item.filename}</Typography>
                 <Typography variant="body2" color="textSecondary">
-                  Metadata issues: {item.issues.join(', ')}
+                  {t.metadataIssues} {item.issues.map(getIssueLabel).join(', ')}
                 </Typography>
                 {item.metadata?.photoTakenTime && (
                   <Typography variant="body2">
-                    Taken: {new Date(item.metadata.photoTakenTime).toLocaleString()}
+                    {t.taken} {new Date(item.metadata.photoTakenTime).toLocaleString(language === 'es' ? 'es-ES' : 'en-US')}
                   </Typography>
                 )}
                 {item.photoLink && (
                   <Typography variant="body2" sx={{ mt: 1 }}>
                     <a href={item.photoLink} target="_blank" rel="noopener noreferrer">
-                      View in Google Photos
+                      {t.viewInGooglePhotos}
                     </a>
                   </Typography>
                 )}
