@@ -2,6 +2,7 @@
   "name": "google-photos-inspector-frontend",
   "version": "1.0.0",
   "description": "Frontend for Google Photos Inspector",
+  "homepage": "https://rafa-ramirez.github.io/google-photos-inspector",
   "private": true,
   "dependencies": {
     "react": "^18.2.0",
@@ -21,7 +22,9 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build"
   },
   "eslintConfig": {
     "extends": [
@@ -41,6 +44,7 @@
     ]
   },
   "devDependencies": {
-    "react-scripts": "5.0.1"
+    "react-scripts": "5.0.1",
+    "gh-pages": "^6.0.0"
   }
 }

@@ -1,61 +1,42 @@
-# Getting Started
-
-Welcome! This guide will get you up and running in minutes.
-
-## 1️⃣ Install Orbstack (One-time)
-
-Orbstack is a lightweight container platform that runs all the code. No installation needed on your Mac!
-
-1. Download Orbstack: [orbstack.dev](https://orbstack.dev)
-2. Drag to Applications folder
-3. Launch OrbStack
-4. Done! ✅
-
-## 2️⃣ Quick Start (5 minutes)
-
-```bash
-# Navigate to project
-cd /Users/rafa/projects/google-photos-inspector
-
-# Make startup script executable (one time)
-chmod +x quick-start.sh
-
-# Run quick start
-./quick-start.sh
-```
-
-This will:
-- Check Orbstack is running ✓
-- Start all containers
-- Create `.env` file if needed
-
-## 3️⃣ Launch Application
-
-```bash
-# Start the app
-docker-compose up -d
-
-# Open in browser
-open http://localhost:3000
-```
-
-You should see the welcome screen. Click "Go to Analyzer"!
-
-## What You Can Do
-
-### 📋 Local Takeout Analyzer  
-Find photos missing GPS location data and identify poorly formatted filenames in Google Takeout exports:
-- Select an entire Takeout Folder
-- Instantly identify missing location data in EXIF metadata
-- Validates that all photos follow format: `YYYYMMDD_HHMMSS.ext`
-- Finds naming issues (duplicates, suffixes, etc.)
-- Export report for manual fixes
-- Batch operations for large libraries (gigabytes of data processed in seconds)
+# 🚀 Getting Started
+ 
+ This tool is now a **purely static web application**. This means you don't need to install anything or run any commands.
+ 
+ ## 1. Open the Tool
+ 
+ Simply visit the live application:
+ **[https://rafa-ramirez.github.io/google-photos-inspector/](https://rafa-ramirez.github.io/google-photos-inspector/)**
+ 
+ ## 2. Prepare your Data
+ 
+ 1.  Go to [Google Takeout](https://takeout.google.com/).
+ 2.  Select **only** "Google Photos".
+ 3.  Download and extract the resulting `.zip` file on your computer.
+ 
+ ## 3. Analyze your Photos
+ 
+ 1.  Click the **"Go to Analyzer"** button.
+ 2.  Click **"Choose Folder"**.
+ 3.  Select the folder named `Google Photos` (or a specific subfolder) from your extracted Takeout.
+ 4.  The tool will automatically scan for:
+     -   **Filename issues**: Duplicates, wrong formats, or `_edited` versions.
+     -   **Metadata issues**: Missing location data in the accompanying `.json` files.
+ 
+ ## 4. Review and Fix
+ 
+ -   Items with issues will appear in a list.
+ -   Click the **"View in Google Photos"** link to find the original photo and fix its location or download it.
+ -   You can export the list as **CSV** or **JSON** for further processing.
+ 
+ ---
+ 
+ ### 🔒 Privacy Note
+ Analysis happens 100% in your browser. Your photos never leave your computer.
 
 ## Key Features
 
 ✅ **Easy Setup** - No configuration required  
-✅ **No Installation** - Everything runs in containers  
+✅ **No Installation** - Everything runs in your browser  
 ✅ **Modern UI** - Material Design 3  
 ✅ **Detailed Reports** - Export JSON/CSV  
 ✅ **Privacy First** - All processing is 100% offline, no data sharing  

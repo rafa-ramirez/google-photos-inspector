@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Container, Box, Button, Card, CardContent, Typography, CircularProgress, Alert } from '@mui/material';
 import { useAnalysisStore } from '../store';
-import { analysisAPI } from '../api';
+import { analyzeFiles } from '../utils/analysis';
 
 export default function LocalAnalyzer() {
   const { 
@@ -36,24 +36,20 @@ export default function LocalAnalyzer() {
     useAnalysisStore.getState().clearResults();
 
     try {
-      const fileArray = Array.from(filesToAnalyze).filter(f => !f.name.startsWith('.'));
-      const jsonFiles = fileArray.filter(f => f.name.endsWith('.json'));
-      const mediaFiles = fileArray
-        .filter(f => !f.name.endsWith('.json') && !f.name.endsWith('.html') && !f.name.endsWith('.txt'))
-        .map(f => f.name); // Send only names for media files
-
-      const { data } = await analysisAPI.uploadFiles(jsonFiles, mediaFiles);
+      // Perform analysis entirely in the browser
+      const data = await analyzeFiles(filesToAnalyze);
       
       const sortedResults = (data.results || []).sort((a, b) => b.filename.localeCompare(a.filename));
       setAnalysisResults(sortedResults);
       
       setAnalysisSummary({
-        totalFiles: data.totalFiles || mediaFiles.length,
-        totalSelectedFiles: fileArray.length,
+        totalFiles: data.totalFiles,
+        totalSelectedFiles: filesToAnalyze.length,
         missingLocationCount: data.results?.length || 0
       });
     } catch (error) {
-      setAnalysisError(error.response?.data?.error || 'Analysis failed');
+      console.error('Analysis failed:', error);
+      setAnalysisError(error.message || 'Analysis failed');
     } finally {
       setIsAnalyzing(false);
     }
@@ -76,7 +72,7 @@ export default function LocalAnalyzer() {
           </Typography>
 
           <Alert severity="info" sx={{ mb: 3 }}>
-            <strong>Privacy Note:</strong> When your browser asks to "Upload files", it simply means granting this app permission to read them. <strong>No files are ever sent to the internet or stored anywhere.</strong> All analysis happens 100% offline on your computer.
+            <strong>Privacy & Security:</strong> This tool is 100% serverless. When your browser asks to "Upload files", it simply means granting this app permission to read them locally. <strong>No data is ever sent to GitHub, any server, or the internet.</strong> All analysis happens entirely in your browser's memory.
           </Alert>
 
           <Box sx={{ display: 'flex', gap: 2, alignItems: 'center' }}>
