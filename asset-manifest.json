@@ -1,10 +1,10 @@
 {
   "files": {
-    "main.js": "/google-photos-inspector/static/js/main.ffaf7728.js",
+    "main.js": "/google-photos-inspector/static/js/main.66e71c0b.js",
     "index.html": "/google-photos-inspector/index.html",
-    "main.ffaf7728.js.map": "/google-photos-inspector/static/js/main.ffaf7728.js.map"
+    "main.66e71c0b.js.map": "/google-photos-inspector/static/js/main.66e71c0b.js.map"
   },
   "entrypoints": [
-    "static/js/main.ffaf7728.js"
+    "static/js/main.66e71c0b.js"
   ]
 }
