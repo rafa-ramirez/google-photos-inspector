@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Container, Box, Button, Card, CardContent, Typography, CircularProgress, Alert, Tabs, Tab } from '@mui/material';
+import { Container, Box, Button, Card, CardContent, Typography, CircularProgress, Alert, Tabs, Tab, TablePagination } from '@mui/material';
 import { useAnalysisStore } from '../store';
 import { analyzeFiles } from '../utils/analysis';
 import { translations } from '../translations';
@@ -19,6 +19,8 @@ export default function LocalAnalyzer() {
 
   const t = translations[language];
   const [selectedTab, setSelectedTab] = useState('all');
+  const [page, setPage] = useState(0);
+  const [rowsPerPage, setRowsPerPage] = useState(20);
 
   const handleFileSelect = (event) => {
     const files = event.target.files;
@@ -66,6 +68,22 @@ export default function LocalAnalyzer() {
   const filteredResults = selectedTab === 'all'
     ? analysisResults
     : analysisResults.filter((item) => item.issues.includes(selectedTab));
+
+  const handleChangePage = (event, newPage) => {
+    setPage(newPage);
+  };
+
+  const handleChangeRowsPerPage = (event) => {
+    setRowsPerPage(parseInt(event.target.value, 10));
+    setPage(0);
+  };
+
+  const handleTabChange = (e, newValue) => {
+    setSelectedTab(newValue);
+    setPage(0);
+  };
+
+  const paginatedResults = filteredResults.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage);
 
   return (
     <Container maxWidth="lg" sx={{ py: 4 }}>
@@ -140,7 +158,7 @@ export default function LocalAnalyzer() {
           <Box sx={{ borderBottom: 1, borderColor: 'divider', mb: 3 }}>
             <Tabs 
               value={selectedTab} 
-              onChange={(e, newValue) => setSelectedTab(newValue)}
+              onChange={handleTabChange}
               variant="scrollable"
               scrollButtons="auto"
             >
@@ -159,7 +177,7 @@ export default function LocalAnalyzer() {
             {t.foundIssues.replace('{count}', filteredResults.length)}
           </Typography>
 
-          {filteredResults.map((item) => (
+          {paginatedResults.map((item) => (
             <Card key={item.id} sx={{ mb: 2 }}>
               <CardContent>
                 <Typography variant="h6">{item.filename}</Typography>
@@ -181,6 +199,17 @@ export default function LocalAnalyzer() {
               </CardContent>
             </Card>
           ))}
+
+          <TablePagination
+            component="div"
+            count={filteredResults.length}
+            page={page}
+            onPageChange={handleChangePage}
+            rowsPerPage={rowsPerPage}
+            onRowsPerPageChange={handleChangeRowsPerPage}
+            rowsPerPageOptions={[10, 20, 50, 100, 200]}
+            labelRowsPerPage={language === 'es' ? 'Filas por página:' : 'Rows per page:'}
+          />
         </>
       )}
     </Container>
