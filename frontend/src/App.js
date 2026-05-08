@@ -17,11 +17,43 @@ const theme = createTheme({
       main: '#f50057',
     },
     background: {
-      default: '#f5f5f5',
+      default: '#f8fafc', // Softer background
     },
   },
   typography: {
     fontFamily: '"Roboto", "Helvetica", "Arial", sans-serif',
+  },
+  shape: {
+    borderRadius: 16, // M3 rounded corners
+  },
+  components: {
+    MuiButton: {
+      styleOverrides: {
+        root: {
+          textTransform: 'none', // M3 doesn't use all-caps buttons
+          fontWeight: 600,
+          padding: '10px 24px',
+          borderRadius: 24, // Pill-shaped buttons
+        },
+      },
+    },
+    MuiCard: {
+      styleOverrides: {
+        root: {
+          boxShadow: '0px 4px 20px rgba(0, 0, 0, 0.05)', // Softer, wider shadows
+          border: '1px solid rgba(0, 0, 0, 0.05)',
+          elevation: 0,
+        },
+      },
+    },
+    MuiAppBar: {
+      styleOverrides: {
+        root: {
+          boxShadow: 'none',
+          borderBottom: '1px solid rgba(0, 0, 0, 0.08)',
+        },
+      },
+    },
   },
 });
 

@@ -83,11 +83,11 @@ export default function LocalAnalyzer() {
             {t.uploadDescription}
           </Typography>
 
-          <Alert severity="info" sx={{ mb: 3 }}>
+          <Alert severity="success" sx={{ mb: 3 }}>
             <strong>{t.privacyNote}</strong> {t.privacyText}
           </Alert>
 
-          <Box sx={{ display: 'flex', gap: 2, alignItems: 'center' }}>
+          <Box sx={{ display: 'flex', justifyContent: 'center', mt: 4, mb: 2 }}>
             <input
               type="file"
               multiple
@@ -100,11 +100,14 @@ export default function LocalAnalyzer() {
             />
             <label htmlFor="file-input">
               <Button
-                variant="outlined"
+                variant="contained"
+                disableElevation
+                size="large"
                 component="span"
                 disabled={isAnalyzing}
+                sx={{ px: 4, py: 1.5, fontSize: '1.1rem' }}
               >
-                {isAnalyzing ? <CircularProgress size={24} sx={{ mr: 2 }} /> : null}
+                {isAnalyzing ? <CircularProgress size={24} color="inherit" sx={{ mr: 2 }} /> : null}
                 {isAnalyzing ? t.analyzing : t.chooseFolder}
               </Button>
             </label>
