@@ -5,16 +5,16 @@ import { analyzeFiles } from '../utils/analysis';
 import { translations } from '../translations';
 
 export default function LocalAnalyzer() {
-  const { 
+  const {
     language,
-    analysisResults, 
+    analysisResults,
     analysisSummary,
-    isAnalyzing, 
-    analysisError, 
-    setAnalysisResults, 
+    isAnalyzing,
+    analysisError,
+    setAnalysisResults,
     setAnalysisSummary,
-    setIsAnalyzing, 
-    setAnalysisError 
+    setIsAnalyzing,
+    setAnalysisError
   } = useAnalysisStore();
 
   const t = translations[language];
