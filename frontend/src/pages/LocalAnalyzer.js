@@ -1,5 +1,5 @@
-import React from 'react';
-import { Container, Box, Button, Card, CardContent, Typography, CircularProgress, Alert } from '@mui/material';
+import React, { useState } from 'react';
+import { Container, Box, Button, Card, CardContent, Typography, CircularProgress, Alert, Tabs, Tab } from '@mui/material';
 import { useAnalysisStore } from '../store';
 import { analyzeFiles } from '../utils/analysis';
 import { translations } from '../translations';
@@ -18,6 +18,7 @@ export default function LocalAnalyzer() {
   } = useAnalysisStore();
 
   const t = translations[language];
+  const [selectedTab, setSelectedTab] = useState('all');
 
   const handleFileSelect = (event) => {
     const files = event.target.files;
@@ -57,6 +58,14 @@ export default function LocalAnalyzer() {
   const getIssueLabel = (issue) => {
     return t.issues[issue] || issue;
   };
+
+  const uniqueIssues = Array.from(
+    new Set(analysisResults.flatMap((item) => item.issues))
+  ).sort();
+
+  const filteredResults = selectedTab === 'all'
+    ? analysisResults
+    : analysisResults.filter((item) => item.issues.includes(selectedTab));
 
   return (
     <Container maxWidth="lg" sx={{ py: 4 }}>
@@ -125,11 +134,29 @@ export default function LocalAnalyzer() {
 
       {analysisResults.length > 0 && (
         <>
+          <Box sx={{ borderBottom: 1, borderColor: 'divider', mb: 3 }}>
+            <Tabs 
+              value={selectedTab} 
+              onChange={(e, newValue) => setSelectedTab(newValue)}
+              variant="scrollable"
+              scrollButtons="auto"
+            >
+              <Tab label={`${t.allIssues} (${analysisResults.length})`} value="all" />
+              {uniqueIssues.map(issue => (
+                <Tab 
+                  key={issue} 
+                  label={`${getIssueLabel(issue)} (${analysisResults.filter(r => r.issues.includes(issue)).length})`} 
+                  value={issue} 
+                />
+              ))}
+            </Tabs>
+          </Box>
+
           <Typography variant="h6" gutterBottom>
-            {t.foundIssues.replace('{count}', analysisResults.length)}
+            {t.foundIssues.replace('{count}', filteredResults.length)}
           </Typography>
 
-          {analysisResults.map((item) => (
+          {filteredResults.map((item) => (
             <Card key={item.id} sx={{ mb: 2 }}>
               <CardContent>
                 <Typography variant="h6">{item.filename}</Typography>
