@@ -4,10 +4,7 @@ import { ThemeProvider, createTheme } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
 
 import Navigation from './components/Navigation';
-import Home from './pages/Home';
 import LocalAnalyzer from './pages/LocalAnalyzer';
-import Results from './pages/Results';
-import Settings from './pages/Settings';
 
 const theme = createTheme({
   palette: {

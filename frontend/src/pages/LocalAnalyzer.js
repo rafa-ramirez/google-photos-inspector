@@ -14,11 +14,11 @@ export default function LocalAnalyzer() {
     setIsAnalyzing, 
     setAnalysisError 
   } = useAnalysisStore();
-  const [selectedFiles, setSelectedFiles] = useState(null);
+
 
   const handleFileSelect = (event) => {
     const files = event.target.files;
-    setSelectedFiles(files);
+
     if (files && files.length > 0) {
       handleAnalyze(files);
     }
