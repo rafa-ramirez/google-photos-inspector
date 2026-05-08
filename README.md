@@ -52,17 +52,10 @@ The tool validates this format: `YYYYMMDD_HHMMSS.ext`
 - `20260507_212000_edited.jpg` (Has "_edited" suffix)
 - `IMG-20260507-WA0001.jpg` (WhatsApp format)
 
+### 🌍 Multi-Language Support
+- **English** and **Spanish** are fully supported.
+- Use the language toggle in the navigation bar to switch instantly, or visit the `/es` URL directly.
+
 ---
-
-**Made with ❤️ for Google Photos enthusiasts**
-ns.
-
----
-
-## Next Steps
-
-1. 📖 Read [**GETTING_STARTED.md**](GETTING_STARTED.md)
-2. 🚀 Run: `docker-compose up -d`
-3. 🎉 Visit: http://localhost:3000
 
 **Made with ❤️ for Google Photos enthusiasts**

@@ -51,38 +51,11 @@
 | [TROUBLESHOOTING.md](docs/TROUBLESHOOTING.md) | Common issues and fixes |
 | [FAQ.md](docs/FAQ.md) | Frequently asked questions |
 
-## Common Commands
+## 🌍 Multi-Language Support
 
-```bash
-# Start application
-docker-compose up
-
-# Start in background
-docker-compose up -d
-
-# Stop application
-docker-compose down
-
-# View logs
-docker-compose logs -f
-
-# Restart a service
-docker-compose restart backend
-
-# Stop and remove all data
-docker-compose down -v
-```
-
-## Troubleshooting
-
-**Orbstack not running?**
-→ Launch OrbStack from Applications folder, wait 30 seconds
-
-**Port already in use?**
-→ Change ports in `docker-compose.yml` or close other apps
-
-**Need more help?**
-→ Check [FAQ.md](docs/FAQ.md) or [TROUBLESHOOTING.md](docs/TROUBLESHOOTING.md)
+The application fully supports English and Spanish.
+- Use the language toggle in the top navigation bar.
+- Or visit directly: `https://rafa-ramirez.github.io/google-photos-inspector/#/es`
 
 ## File Format Guide
 
@@ -96,24 +69,12 @@ docker-compose down -v
 | Old photo | `DSC_0001.jpg` | | ✗ |
 | Android | `IMG-20260507-WA0001.jpg` | | ✗ |
 
-## Architecture
-
-```
-Frontend (React + Material UI)
-    ↓
-Backend API (Node.js + Express)
-    ↓
-SQLite Database (Local caching)
-```
-
-All runs in Docker containers via Orbstack. No dependencies on your Mac!
-
 ## Privacy & Security
 
 🔒 **Your data is safe:**
-- All processing happens 100% locally and offline
-- No APIs, no logins, no cloud uploads
-- You can delete everything anytime
+- All processing happens 100% locally and offline in your browser's memory.
+- No APIs, no logins, no cloud uploads.
+- We never see your files.
 
 ## Support the Project
 

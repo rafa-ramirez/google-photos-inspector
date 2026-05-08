@@ -37,12 +37,12 @@ export const translations = {
     }
   },
   es: {
-    title: "Google Photos Inspector",
+    title: "Google Fotos Inspector",
     tagline: "Analiza los metadatos de tu Google Takeout local. Asegúrate de que tus fotos estén bien organizadas y tengan datos de ubicación.",
     goToAnalyzer: "Ir al Analizador",
     keyFeatures: "Características principales:",
     feature1: "✅ Validar formatos de nombre de archivo",
-    feature2: "🔗 Enlaces directos a Google Photos",
+    feature2: "🔗 Enlaces directos a Google Fotos",
     feature3: "📊 Analizar metadatos EXIF de ubicación",
     feature4: "📥 Soporte para exportaciones de Google Takeout",
     
@@ -57,7 +57,7 @@ export const translations = {
     foundIssues: "Encontrados {count} elementos con problemas",
     metadataIssues: "Problemas de metadatos:",
     taken: "Fecha:",
-    viewInGooglePhotos: "Ver en Google Photos",
+    viewInGooglePhotos: "Ver en Google Fotos",
     successMessage: "¡Procesados con éxito {total} elementos! Todos tienen nombres válidos y datos de ubicación EXIF.",
     selectFilesError: "Por favor, selecciona archivos para analizar",
     analysisFailed: "Error en el análisis",
