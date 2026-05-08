@@ -11,7 +11,7 @@ export const translations = {
     feature4: "📥 Support for Google Takeout exports",
 
     analyzerTitle: "📝 Local EXIF Metadata and Filename Analyzer",
-    uploadTitle: "Upload Google Takeout Folder",
+    uploadTitle: "Choose Google Takeout Folder",
     uploadDescription: "Select your Google Takeout export folder. The tool will instantly analyze all media filenames for formatting issues and check their JSON metadata for missing location data.",
     privacyNote: "Privacy & Security:",
     privacyText: "This tool is 100% serverless. When your browser asks to \"Upload files\", it simply means granting this app permission to read them locally. No data is ever sent to GitHub, any server, or the internet. All analysis happens entirely in your browser's memory.",
@@ -48,7 +48,7 @@ export const translations = {
     feature4: "📥 Soporte para exportaciones de Google Takeout",
 
     analyzerTitle: "📝 Analizador Local de Metadatos EXIF y Nombres de Archivo",
-    uploadTitle: "Subir Carpeta de Google Takeout",
+    uploadTitle: "Elegir Carpeta de Google Takeout",
     uploadDescription: "Selecciona tu carpeta de exportación de Google Takeout. La herramienta analizará al instante los nombres de archivo y los metadatos JSON en busca de errores.",
     privacyNote: "Privacidad y Seguridad:",
     privacyText: "Esta herramienta es 100% sin servidor. Cuando tu navegador pide \"Subir archivos\", solo significa conceder permiso para leerlos localmente. No se envía ningún dato a GitHub ni a internet. Todo el análisis ocurre en la memoria de tu navegador.",
