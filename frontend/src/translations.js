@@ -46,7 +46,7 @@ export const translations = {
     feature3: "📊 Analizar metadatos EXIF de ubicación",
     feature4: "📥 Soporte para exportaciones de Google Takeout",
     
-    analyzerTitle: "📝 Analizador Local de Metadatos EXIF y Nombres",
+    analyzerTitle: "📝 Analizador Local de Metadatos EXIF y Nombres de Archivo",
     uploadTitle: "Subir Carpeta de Google Takeout",
     uploadDescription: "Selecciona tu carpeta de exportación de Google Takeout. La herramienta analizará al instante los nombres de archivo y los metadatos JSON en busca de errores.",
     privacyNote: "Privacidad y Seguridad:",
