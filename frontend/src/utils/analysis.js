@@ -43,8 +43,10 @@ function identifyIssues(filename) {
 /**
  * Analyzes a list of files from a Google Takeout folder.
  * @param {File[]} fileList - The list of files from the input element.
+ * @param {Object} options - Analysis options
+ * @param {boolean} options.ignoreMetadata - If true, only analyze filenames without checking metadata files
  */
-export async function analyzeFiles(fileList) {
+export async function analyzeFiles(fileList, options = {}) {
   const results = [];
   const fileArray = Array.from(fileList).filter(f => !f.name.startsWith('.'));
   
@@ -58,12 +60,14 @@ export async function analyzeFiles(fileList) {
 
   // Create a map of JSON contents for fast lookup
   const jsonMap = new Map();
-  for (const file of jsonFiles) {
-    try {
-      const text = await file.text();
-      jsonMap.set(file.name, JSON.parse(text));
-    } catch (e) {
-      console.warn(`Skipping invalid JSON file: ${file.name} - ${e.message}`);
+  if (!options.ignoreMetadata) {
+    for (const file of jsonFiles) {
+      try {
+        const text = await file.text();
+        jsonMap.set(file.name, JSON.parse(text));
+      } catch (e) {
+        console.warn(`Skipping invalid JSON file: ${file.name} - ${e.message}`);
+      }
     }
   }
 
@@ -95,13 +99,13 @@ export async function analyzeFiles(fileList) {
       metadata = jsonMap.get(jsonKey);
     }
 
-    let hasExifLocation = true;
+    let hasExifLocation = options.ignoreMetadata ? true : true;
     let exifLat = null;
     let exifLng = null;
     let formattedPhotoTakenTime = null;
     let photoLink = `https://photos.google.com/search/${encodeURIComponent(`"${mediaFileName}"`)}`;
 
-    if (metadata) {
+    if (metadata && !options.ignoreMetadata) {
       if (metadata.geoDataExif) {
         exifLat = metadata.geoDataExif.latitude;
         exifLng = metadata.geoDataExif.longitude;
@@ -125,13 +129,10 @@ export async function analyzeFiles(fileList) {
       } else {
         photoLink = `https://photos.google.com/search/${encodeURIComponent(`"${metadata.title || mediaFileName}"`)}`;
       }
-    } else {
-      // No metadata file found, assume location is missing
-      hasExifLocation = false;
     }
 
     const issues = [...validation.issues];
-    if (!hasExifLocation) {
+    if (!options.ignoreMetadata && !hasExifLocation) {
       issues.push(metadata ? 'missing_exif_location_data' : 'missing_metadata_file');
     }
 

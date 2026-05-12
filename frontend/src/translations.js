@@ -26,6 +26,9 @@ export const translations = {
     selectFilesError: "Please select files to analyze",
     analysisFailed: "Analysis failed",
     allIssues: "All Issues",
+    analysisOptions: "Analysis Options:",
+    ignoreMetadataLabel: "Ignore metadata files (check only filenames)",
+    ignoreMetadataDescription: "When enabled, the tool will only check filename formats and will skip checking for EXIF location data in JSON metadata files.",
 
     issues: {
       has_parentheses: "has parentheses",
@@ -63,6 +66,9 @@ export const translations = {
     selectFilesError: "Por favor, selecciona archivos para analizar",
     analysisFailed: "Error en el análisis",
     allIssues: "Todos los problemas",
+    analysisOptions: "Opciones de análisis:",
+    ignoreMetadataLabel: "Ignorar archivos de metadatos (solo verificar nombres de archivo)",
+    ignoreMetadataDescription: "Cuando está habilitado, la herramienta solo verificará los formatos de nombre de archivo y omitirá la búsqueda de datos de ubicación EXIF en archivos JSON de metadatos.",
 
     issues: {
       has_parentheses: "tiene paréntesis",

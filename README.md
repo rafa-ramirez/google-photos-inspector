@@ -24,6 +24,8 @@ Google Takeout often gives you a mess of files. This tool helps you:
 ### 📋 Local Takeout Analyzer
 - **Analyze folders** entirely offline in your browser.
 - **Identify issues**: suffixes (e.g., `(1)`), duplicates, wrong formats, `_edited` tags.
+- **Flexible analysis modes**: Check both filename and EXIF metadata, or just filenames.
+- **Ignore metadata option**: Skip JSON metadata files for faster filename-only validation.
 - **Direct Google Photos links** for easy access to the original photo for fixing.
 - **Fast execution** – only parses filenames and JSON metadata, avoiding heavy image reading.
 

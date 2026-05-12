@@ -16,11 +16,14 @@
  ## 3. Analyze your Photos
  
  1.  Click the **"Go to Analyzer"** button.
- 2.  Click **"Choose Folder"**.
- 3.  Select the folder named `Google Photos` (or a specific subfolder) from your extracted Takeout.
- 4.  The tool will automatically scan for:
-     -   **Filename issues**: Duplicates, wrong formats, or `_edited` versions.
-     -   **Metadata issues**: Missing location data in the accompanying `.json` files.
+ 2.  (Optional) Configure **Analysis Options**:
+     -   Check **"Ignore metadata files"** to validate only filenames without checking EXIF location data.
+     -   Leave unchecked to check both filename formats and location metadata.
+ 3.  Click **"Choose Folder"**.
+ 4.  Select the folder named `Google Photos` (or a specific subfolder) from your extracted Takeout.
+ 5.  The tool will automatically scan for (based on your options):
+     -   **Filename issues**: Duplicates, wrong formats, or `_edited` versions (always checked).
+     -   **Metadata issues**: Missing location data in the accompanying `.json` files (optional).
  
  ## 4. Review and Fix
  

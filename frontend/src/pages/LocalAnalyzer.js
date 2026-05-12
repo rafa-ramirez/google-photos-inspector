@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Container, Box, Button, Card, CardContent, Typography, CircularProgress, Alert, Tabs, Tab, TablePagination } from '@mui/material';
+import { Container, Box, Button, Card, CardContent, Typography, CircularProgress, Alert, Tabs, Tab, TablePagination, FormControlLabel, Checkbox } from '@mui/material';
 import { useAnalysisStore } from '../store';
 import { analyzeFiles } from '../utils/analysis';
 import { translations } from '../translations';
@@ -21,6 +21,7 @@ export default function LocalAnalyzer() {
   const [selectedTab, setSelectedTab] = useState('all');
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(20);
+  const [ignoreMetadata, setIgnoreMetadata] = useState(false);
 
   const handleFileSelect = (event) => {
     const files = event.target.files;
@@ -41,7 +42,7 @@ export default function LocalAnalyzer() {
     useAnalysisStore.getState().clearResults();
 
     try {
-      const data = await analyzeFiles(filesToAnalyze);
+      const data = await analyzeFiles(filesToAnalyze, { ignoreMetadata });
       const sortedResults = (data.results || []).sort((a, b) => b.filename.localeCompare(a.filename));
       setAnalysisResults(sortedResults);
       setAnalysisSummary({
@@ -104,6 +105,21 @@ export default function LocalAnalyzer() {
           <Alert severity="success" sx={{ mb: 3 }}>
             <strong>{t.privacyNote}</strong> {t.privacyText}
           </Alert>
+
+          <Box sx={{ mb: 3, p: 2, bgcolor: 'background.paper', border: '1px solid', borderColor: 'divider', borderRadius: 1 }}>
+            <Typography variant="subtitle2" gutterBottom sx={{ fontWeight: 600, mb: 2 }}>
+              {t.analysisOptions}
+            </Typography>
+            <FormControlLabel
+              control={<Checkbox checked={ignoreMetadata} onChange={(e) => setIgnoreMetadata(e.target.checked)} />}
+              label={t.ignoreMetadataLabel}
+            />
+            {ignoreMetadata && (
+              <Typography variant="body2" color="textSecondary" sx={{ mt: 1, ml: 4 }}>
+                {t.ignoreMetadataDescription}
+              </Typography>
+            )}
+          </Box>
 
           <Box sx={{ display: 'flex', justifyContent: 'center', mt: 4, mb: 2 }}>
             <input

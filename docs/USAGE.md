@@ -55,24 +55,35 @@ Takeout/Google Photos/2026/
 ## Using the Analyzer
 
 1. **Open the Application**: Go to `http://localhost:3000`.
-2. **Select Folder**: Click the "Choose Folder" button.
-3. **Pick the Directory**: Select your extracted Google Takeout folder (or a specific year/album folder inside it).
-4. **Automatic Analysis**: The application will instantly begin analyzing the folder structure. No need to click any additional buttons!
+2. **Configure Analysis Options** (optional):
+   - **Ignore metadata files**: Check this option if you only want to validate filename formats without checking EXIF location data. This speeds up analysis by skipping JSON metadata file parsing.
+3. **Select Folder**: Click the "Choose Folder" button.
+4. **Pick the Directory**: Select your extracted Google Takeout folder (or a specific year/album folder inside it).
+5. **Automatic Analysis**: The application will instantly begin analyzing the folder structure based on your selected options.
 
 ### Understanding the Analysis
 
-The tool automatically pairs your media files with their corresponding JSON metadata. It then filters out the noise (like hidden `.DS_Store` files or random text files) and provides a clear summary:
+The tool automatically pairs your media files with their corresponding JSON metadata (unless you enabled "Ignore metadata files"). It then filters out the noise (like hidden `.DS_Store` files or random text files) and provides a clear summary:
 
-- **Processed Counts**: It will explicitly tell you how many actual media items were processed out of the total files you selected (since roughly half the files are usually JSONs).
+- **Processed Counts**: It will explicitly tell you how many actual media items were processed out of the total files you selected (since roughly half the files are usually JSONs when checking metadata).
+- **Analysis Mode**: 
+  - If "Ignore metadata files" is **OFF**: Both filename formats and EXIF location data are checked.
+  - If "Ignore metadata files" is **ON**: Only filename formats are validated.
 - **Sorting**: The results are sorted by filename in descending order, meaning your newest files (e.g. `202608...`) will appear at the top.
 - **Resetting**: If you want to clear the results, simply click the "🔎 Google Photos Inspector" title at the top, or just click "Choose Folder" again.
 
 ### Reviewing Issues
 
-If any items have issues, they will be listed on the screen. The issues can be:
+If any items have issues, they will be listed on the screen. The issues can vary based on your analysis options:
 
+**When checking filenames** (always analyzed):
 - `wrong_format`: The filename doesn't match the `YYYYMMDD_HHMMSS` structure.
 - `has_numeric_suffix`: The file is a duplicate ending with `(1)` or `_1`.
+- `has_parentheses`: The filename contains parentheses.
+- `has_edited_suffix`: The filename contains `_edited` suffix.
+- `has_copy_suffix`: The filename contains `copy` suffix.
+
+**When checking metadata** (only if "Ignore metadata files" is OFF):
 - `missing_exif_location_data`: The JSON file indicates the photo lacks GPS coordinates.
 - `missing_metadata_file`: The media file has no corresponding JSON file.
 
